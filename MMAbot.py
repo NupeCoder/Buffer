@@ -11,9 +11,11 @@ class Buffer(discord.Client):
         if message.author.id == self.user.id:
             return
 
-        print(f'Message from {message.author}: {message.content}')
-        await message.channel.send('hello')
-            
+        if message.content == ("!mma"):
+            await message.channel.send('Search a fighter?')
+        
+    
+
 
 intents = discord.Intents.all()
 intents.message_content = True
