@@ -1,25 +1,22 @@
 import discord
 from discord.ext import commands
 import config
+import FighterSearch
 
-
-class Buffer(discord.Client):
-    async def on_run(self):
-        print(f'hello {self.user}')
-        
-    async def on_message(self, message):
-        if message.author.id == self.user.id:
-            return
-
-        if message.content == ("!mma"):
-            await message.channel.send('Search a fighter?')
-        
-    
 
 
 intents = discord.Intents.all()
-intents.message_content = True
+bot = commands.Bot(command_prefix="!", intents=intents)
 
-client  = Buffer(intents=intents)
+@bot.event
+async def on_ready():
+    print('BOT ON')
 
-client.run(config.TOKEN)
+
+@bot.command(name="ufc")
+async def find(ctx, name):
+        FighterSearch.search(name)
+        await ctx.reply(FighterSearch.result)
+
+
+bot.run(config.TOKEN)
